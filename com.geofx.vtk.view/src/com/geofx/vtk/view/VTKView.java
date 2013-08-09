@@ -25,7 +25,7 @@ import vtk.rendering.awt.vtkAwtComponent;
 
 /**
  * This sample class demonstrates how to plug-in a new
- * workbench view. 
+ * workbench view with a VTK widget embedded 
  */
 
 public class VTKView extends ViewPart 
@@ -44,6 +44,7 @@ public class VTKView extends ViewPart
 		// we can't use the default Composite because using the AWT bridge
 		// requires that it have the property of SWT.EMBEDDED
 		Composite composite = new Composite(parent, SWT.EMBEDDED);
+		
 		// set the layout so our canvas fills the whole control
 		composite.setLayout(new FillLayout());
 
@@ -66,15 +67,15 @@ public class VTKView extends ViewPart
 		vtkAwtComponent awtWidget = new vtkAwtComponent();
 		awtWidget.getRenderer().AddActor(coneActor);
 
-		// finally, add our canvas as a child of the frame
+		// finally, add our vtk widget as a child of the frame
 		awtFrame.add(awtWidget.getComponent());
 	}
 
 	/**
 	 * Passing the focus request to the viewer's control.
+	 * We don't need this, but it is required
 	 */
 	public void setFocus()
 	{
-
 	}
 }

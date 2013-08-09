@@ -1,6 +1,6 @@
 /*
- * 
  * Copyright (c) 2013 Ric Wright 
+ * 
  * All rights reserved. This program and the accompanying materials 
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -39,8 +39,6 @@ public class Activator extends AbstractUIPlugin
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
 	 */
 	public void start(BundleContext context) throws Exception
@@ -49,28 +47,11 @@ public class Activator extends AbstractUIPlugin
 
 		System.out.println("java.library.path is " + System.getProperty("java.library.path"));
 
+		// go load all the VTK native libraries
 		loadLibraries();
 	}
 
-	private void loadLibraries()
-	{
-		if (!vtkNativeLibrary.LoadAllNativeLibraries())
-		{
-			for (vtkNativeLibrary lib : vtkNativeLibrary.values())
-			{
-				if (!lib.IsLoaded())
-				{
-					System.out.println(lib.GetLibraryName() + " not loaded");
-				}
-			}
-		}
-		vtkNativeLibrary.DisableOutputWindow(null);
-
-	}
-
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
 	 */
 	public void stop(BundleContext context) throws Exception
@@ -100,5 +81,23 @@ public class Activator extends AbstractUIPlugin
 	public static ImageDescriptor getImageDescriptor(String path)
 	{
 		return imageDescriptorFromPlugin(PLUGIN_ID, path);
+	}
+	
+	/**
+	 * Here is where we load all the native VTK libraries.
+	 */
+	private void loadLibraries()
+	{
+		if (!vtkNativeLibrary.LoadAllNativeLibraries())
+		{
+			for (vtkNativeLibrary lib : vtkNativeLibrary.values())
+			{
+				if (!lib.IsLoaded())
+				{
+					System.out.println(lib.GetLibraryName() + " not loaded");
+				}
+			}
+		}
+		vtkNativeLibrary.DisableOutputWindow(null);
 	}
 }
