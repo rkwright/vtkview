@@ -39,7 +39,7 @@ public class VTKView extends ViewPart
 	{	
 		System.setProperty("sun.awt.noerasebackground","true");
 
-		// instantiate the canvas
+		// instantiate the composite for the drawing
 
 		// we can't use the default Composite because using the AWT bridge
 		// requires that it have the property of SWT.EMBEDDED
