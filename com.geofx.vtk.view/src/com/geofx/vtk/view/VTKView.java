@@ -12,6 +12,10 @@
 
 package com.geofx.vtk.view;
 
+import java.awt.BorderLayout;
+
+import javax.swing.JPanel;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -20,6 +24,7 @@ import org.eclipse.ui.part.ViewPart;
 
 import vtk.vtkActor;
 import vtk.vtkConeSource;
+import vtk.vtkPanel;
 import vtk.vtkPolyDataMapper;
 import vtk.rendering.awt.vtkAwtComponent;
 
@@ -30,7 +35,8 @@ import vtk.rendering.awt.vtkAwtComponent;
 
 public class VTKView extends ViewPart 
 {	
-
+	   private vtkPanel panel;
+	   
 	/**
 	 * This is a callback that will allow us
 	 * to create the viewer and initialize it.
@@ -62,13 +68,13 @@ public class VTKView extends ViewPart
 
 		vtkActor coneActor = new vtkActor();
 		coneActor.SetMapper(coneMapper);
+		
+		// create the VTK rendering surface
+		panel = new vtkPanel();
+	    panel.GetRenderer().AddActor(coneActor);
 
-		// VTK rendering part
-		vtkAwtComponent awtWidget = new vtkAwtComponent();
-		awtWidget.getRenderer().AddActor(coneActor);
-
-		// finally, add our vtk widget as a child of the frame
-		awtFrame.add(awtWidget.getComponent());
+	    //and add it as a child of the frame
+	    awtFrame.add(panel);
 	}
 
 	/**
